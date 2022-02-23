@@ -14,27 +14,17 @@
  * }
  */
 class Solution {
-    class Pair{
-        int height;
-        boolean isBal;
-        Pair(int height, boolean isBal){
-            this.height = height;
-            this.isBal = isBal;
-        }
-    }
     public boolean isBalanced(TreeNode root) {
-        Pair pair = getPair(root);
-        return pair.isBal;
+        if(check(root) == -1)return false;
+        return true;
+        
     }
-    public Pair getPair(TreeNode root){
-        if(root == null){
-            return new Pair(0,true);
-        }
-        Pair left = getPair(root.left);
-        Pair right = getPair(root.right);
-        int apniHeight = Math.max(left.height, right.height)+1;
-        int diff = Math.abs(left.height - right.height);
-        boolean kyaMainBalancedHu = diff<=1 && left.isBal && right.isBal;
-        return new Pair(apniHeight, kyaMainBalancedHu);
+    public int check(TreeNode root){
+        if(root == null)return 0;
+        int leftHeight =check(root.left);
+        int rightHeight = check(root.right);
+        if(leftHeight == -1 || rightHeight == -1)return -1;
+        if(Math.abs(leftHeight - rightHeight) >1)return -1;
+        return Math.max(leftHeight, rightHeight)+1;
     }
 }
