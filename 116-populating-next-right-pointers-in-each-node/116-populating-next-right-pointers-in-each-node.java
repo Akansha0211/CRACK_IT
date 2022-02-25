@@ -24,9 +24,10 @@ class Node {
 class Solution {
     public Node connect(Node root) {
         Node start = root;
-        while(start != null && start.left != null){
+        while(start!= null && start.left != null){
             Node temp = start;
             while(temp!= null){
+                
                 temp.left.next = temp.right;
                 if(temp.next != null){
                     temp.right.next = temp.next.left;
