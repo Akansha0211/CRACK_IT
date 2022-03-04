@@ -9,7 +9,9 @@ class Solution {
             ans.add(new ArrayList<>(list));
         }
         if(ind == candidates.length)return;
-        // if(target < candidates[ind])return;
+        
+        if(ind >= candidates.length)return;
+        
         if(candidates[ind]<=target){
             list.add(candidates[ind]);
             comSumHelper(ind, candidates, target-candidates[ind], ans, list);
