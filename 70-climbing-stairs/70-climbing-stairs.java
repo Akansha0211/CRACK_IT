@@ -9,6 +9,7 @@ class Solution {
         int choice1 = climbStairsHelper(n-1, map);
         int choice2 = climbStairsHelper(n-2, map);
         map.put(n, choice1+choice2);
-        return choice1 + choice2;
+        // return choice1 + choice2;
+        return map.get(n);
     }
 }
