@@ -1,25 +1,16 @@
 class Solution {
     public int rob(int[] nums) {
-        if (nums.length == 0) return 0;
-        if (nums.length == 1) return nums[0];
-
-        int[] memo = new int[nums.length];
-
-        Arrays.fill(memo, -1);
-        int m1 = rob(0, nums.length - 2, nums, memo);
-
-        Arrays.fill(memo, -1);
-        int m2 = rob(1, nums.length - 1, nums, memo);
-
-        return Math.max(m1, m2);
+        if(nums.length==1)return nums[0];
+        Map<Integer,Integer> map1 = new HashMap<>();
+        Map<Integer,Integer> map2 = new HashMap<>();
+        return Math.max(robHelper(nums, 0,nums.length-1, map1), robHelper(nums, 1,nums.length, map2));
     }
-    private int rob(int i, int end, int[] nums, int[] memo) {
-        if (i > end) return 0;
-        if (memo[i] != -1) return memo[i];
-
-        return memo[i] = Math.max(
-                rob(i + 2, end, nums, memo) + nums[i],
-                rob(i + 1, end, nums, memo)
-        );
+    public int robHelper(int[]nums, int index,int length,Map<Integer,Integer> map){
+        if(index>=length)return 0;
+        if(map.containsKey(index))return map.get(index);
+        int rob = nums[index] + robHelper(nums, index+2,length, map);
+        int dontRob = robHelper(nums, index+1,length, map);
+        map.put(index, Math.max(rob, dontRob));
+        return map.get(index);
     }
 }
