@@ -50,7 +50,8 @@ class Solution
     {
         // code here 
         
-        int i, j, gap = n + m;
+        int i, j;
+        int gap = (n + m);
         for (gap = nextGap(gap); gap > 0;
              gap = nextGap(gap))
         {
@@ -91,8 +92,7 @@ class Solution
     }
     private static int nextGap(int gap)
     {
-        if (gap <= 1)
-            return 0;
-        return (gap / 2) + (gap % 2);
+        if(gap <=1)return 0;
+        return (gap/2) + (gap%2);
     }
 }
