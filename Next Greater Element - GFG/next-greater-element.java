@@ -34,8 +34,8 @@ class Solution
     public static long[] nextLargerElement(long[] arr, int n)
     { 
         // Your code here
-        long[] ans = new long[arr.length];
         Stack<Integer> st = new Stack<>();
+        long[] ans = new long[n];
         for(int i = 0; i<arr.length; i++){
             while(!st.isEmpty() && arr[st.peek()] < arr[i]){
                 ans[st.pop()] = arr[i];
