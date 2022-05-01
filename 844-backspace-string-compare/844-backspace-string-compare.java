@@ -13,7 +13,7 @@ class Solution {
             if(s.charAt(i) != '#'){
                 st_s.push(s.charAt(i));
             }
-            else if(!st_s.isEmpty()){
+            if(s.charAt(i) == '#' && !st_s.isEmpty()){
                 st_s.pop();
             }
         }
