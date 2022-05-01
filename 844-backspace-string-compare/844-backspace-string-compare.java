@@ -10,12 +10,13 @@ class Solution {
             // }else{
             //     st_s.push(s.charAt(i));
             // }
-            if(s.charAt(i) != '#'){
-                st_s.push(s.charAt(i));
-            }
             if(s.charAt(i) == '#' && !st_s.isEmpty()){
                 st_s.pop();
             }
+            if(s.charAt(i) != '#'){
+                st_s.push(s.charAt(i));
+            }
+            
         }
         
         for(int i = 0; i<t.length(); i++){
