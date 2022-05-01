@@ -20,11 +20,11 @@ class Solution {
         }
         
         for(int i = 0; i<t.length(); i++){
+            if(t.charAt(i) == '#' && !st_t.isEmpty()){
+                st_t.pop();
+            }
             if(t.charAt(i) != '#'){
                 st_t.push(t.charAt(i));
-            }
-            else if(!st_t.isEmpty()){
-                st_t.pop();
             }
         }
         
