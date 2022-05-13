@@ -25,20 +25,22 @@ class RodCutting {
 class Solution{
     public int cutRod(int price[], int n) {
         //code here
-        Map<String, Integer> map = new HashMap<>();
+        HashMap<String,Integer> map = new HashMap<>();
         return maxProfitHelper(price, 0, n, map);
     }
-    public int maxProfitHelper(int[] price , int index, int length, Map<String, Integer> map){
-        if(length == 0)return 0;
+    
+    public int maxProfitHelper(int[] price, int index, int target, HashMap<String, Integer> map){
+        if(target == 0)return 0;
         if(index+1 > price.length)return 0;
-        String key = Integer.toString(index) + "#" + Integer.toString(length);
+        String key = index + "#" + target;
         if(map.containsKey(key))return map.get(key);
         int consider = 0;
-        if(index+1 <= length){
-            consider = price[index] + maxProfitHelper(price, index, length - (index+1), map);
+        if(index + 1 <= target){
+            consider = price[index] +  maxProfitHelper(price, index, target - (index+1), map);
         }
-        int notConsider = maxProfitHelper(price, index+1, length, map);
-        map.put(key , Math.max(consider, notConsider));
+        int notConsider = maxProfitHelper(price, index+1, target, map);
+        map.put(key, Math.max(consider, notConsider));
         return Math.max(consider, notConsider);
     }
+    
 }
