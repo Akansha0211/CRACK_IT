@@ -16,15 +16,13 @@ class Solution {
         for(int i = 0; i<nums.length; i++){
             map.put(nums[i], map.getOrDefault(nums[i], 0)+1);
         }
-        ArrayList<Pair> list = new ArrayList<>();
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
         for(int key : map.keySet()){
-            list.add(new Pair(key, map.get(key)));
+            pq.add(new Pair(key, map.get(key)));
         }
-        Collections.sort(list);
-        
         int[] res = new int[k];
         for(int i = 0; i<k; i++){
-            res[i] = list.get(i).element;
+            res[i] = pq.poll().element;
         }
         return res;
     }
