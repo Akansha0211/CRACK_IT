@@ -8,7 +8,8 @@ class Solution {
             this.freq = freq;
         }
         public int compareTo(Pair o){
-            return o.freq - this.freq;
+            // return o.freq - this.freq;
+            return this.freq - o.freq;
         }
     }
     public int[] topKFrequent(int[] nums, int k) {
@@ -16,7 +17,7 @@ class Solution {
         for(int i = 0; i<nums.length; i++){
             map.put(nums[i], map.getOrDefault(nums[i], 0)+1);
         }
-        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        PriorityQueue<Pair> pq = new PriorityQueue<>(Collections.reverseOrder());
         for(int key : map.keySet()){
             pq.add(new Pair(key, map.get(key)));
         }
