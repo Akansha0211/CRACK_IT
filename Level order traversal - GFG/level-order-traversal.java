@@ -134,7 +134,7 @@ class Solution
         queue.add(node);
         while(queue.size()>0){
             int size = queue.size();
-            while(size-- > 0){
+            while(size -- >0){
                 node = queue.remove();
                 list.add(node.data);
                 if(node.left != null){
@@ -143,9 +143,9 @@ class Solution
                 if(node.right != null){
                     queue.add(node.right);
                 }
+                
             }
         }
-        
         return list;
     }
 }
