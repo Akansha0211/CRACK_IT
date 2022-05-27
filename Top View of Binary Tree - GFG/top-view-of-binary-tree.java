@@ -126,45 +126,49 @@ class Node{
 class Solution
 {
     static class Pair{
-        Node n;
+        Node node;
         int vertLevel;
-        Pair(Node n , int vertLevel){
-            this.n = n;
+        public Pair(Node node, int vertLevel){
+            this.node = node;
             this.vertLevel = vertLevel;
         }
     }
-    static ArrayList<Integer> topView(Node root){
-        ArrayList<Integer> ans = new ArrayList<>();
-        HashMap<Integer, Integer> map = new HashMap<>();
-        Queue<Pair> queue = new LinkedList<>();
-        queue.add(new Pair(root, 0));
+    static ArrayList<Integer> topView(Node root)
+    {
+        // add your code
+        ArrayList<Integer> list = new ArrayList<>();
+        HashMap<Integer,Integer> map = new HashMap<>();
+        
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(root, 0));
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
-        while(queue.size()>0){
-            int size = queue.size();
-            while(size-- > 0){
-                Pair p = queue.poll();
-                Node node = p.n;
-                int vertLvl = p.vertLevel;
-                min = Math.min(min, vertLvl);
-                max = Math.max(max, vertLvl);
-                if(!map.containsKey(vertLvl)){
-                    map.put(vertLvl, node.data);
+        while(q.size()>0){
+            int size = q.size();
+            while(size -- >0){
+                Pair p = q.remove();
+                min = Math.min(p.vertLevel, min);
+                max = Math.max(p.vertLevel, max);
+                
+                if(!map.containsKey(p.vertLevel)){
+                    map.put(p.vertLevel, p.node.data);
                 }
-                if(node.left != null){
-                    queue.add(new Pair(node.left, vertLvl-1));
+                if(p.node.left != null){
+                    q.add(new Pair(p.node.left, p.vertLevel -1));
                 }
-                if(node.right != null){
-                    queue.add(new Pair(node.right, vertLvl+1));
+                if(p.node.right != null){
+                    q.add(new Pair(p.node.right, p.vertLevel+1));
                 }
             }
         }
         for(int i = min; i<=max; i++){
-            ans.add(map.get(i));
+            list.add(map.get(i));
         }
-        return ans;
+        return list;
     }
 }
+
+
 
 
 
