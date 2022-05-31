@@ -43,20 +43,20 @@ class Solution
     {
         // Your code here
         Stack<Integer> st = new Stack<>();
-        int[] span = new int[price.length];
+        int[] ans = new int[price.length];
         for(int i = 0; i<price.length; i++){
             while(!st.isEmpty() && price[st.peek()] <= price[i]){
                 st.pop();
             }
-            if(!st.isEmpty()){
-                span[i] = i - st.peek();
-            }
             if(st.isEmpty()){
-                span[i] = i+1;
+                ans[i] = i+1;
+            }
+            if(!st.isEmpty()){
+                ans[i] = i- st.peek();
             }
             st.push(i);
         }
-        return span;
+        return ans;
     }
     
 }
