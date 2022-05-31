@@ -35,7 +35,7 @@ class Solution
     { 
         // Your code here
         Stack<Integer> st = new Stack<>();
-        long[] ans = new long[n];
+        long[] ans = new long[arr.length];
         for(int i = 0; i<arr.length; i++){
             while(!st.isEmpty() && arr[st.peek()] < arr[i]){
                 ans[st.pop()] = arr[i];
