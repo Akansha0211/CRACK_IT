@@ -1,6 +1,6 @@
 class FreqStack {
     
-    HashMap<Integer, Stack<Integer>> stmap = new HashMap<>();
+    HashMap<Integer,Stack<Integer>> stmap = new HashMap<>();
     HashMap<Integer,Integer> fmap = new HashMap<>();
     int maxFreq = 0;
     
@@ -11,8 +11,8 @@ class FreqStack {
     public void push(int val) {
         int freq = fmap.getOrDefault(val,0);
         freq++;
-        fmap.put(val, freq);
         
+        fmap.put(val, freq);
         if(!stmap.containsKey(freq)){
             stmap.put(freq, new Stack<Integer>());
         }
@@ -22,7 +22,6 @@ class FreqStack {
     
     public int pop() {
         int ans = stmap.get(maxFreq).pop();
-        
         int freq = fmap.get(ans);
         freq--;
         fmap.put(ans, freq);
@@ -31,7 +30,6 @@ class FreqStack {
             stmap.remove(maxFreq);
             maxFreq--;
         }
-        
         return ans;
     }
 }
