@@ -19,11 +19,12 @@ class Solution {
         List<List<Integer>> ans = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
+        
         while(queue.size()>0){
             List<Integer> level = new ArrayList<>();
             int size = queue.size();
-            while(size-- >0){
-                TreeNode rem = queue.poll();
+            while(size-->0){
+               TreeNode rem = queue.poll();
                 level.add(rem.val);
                 if(rem.left != null){
                     queue.add(rem.left);
