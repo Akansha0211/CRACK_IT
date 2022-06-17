@@ -108,17 +108,19 @@ class GFG
 
 class Solution
 {
-	ArrayList <Integer> boundary(Node node){
+	ArrayList <Integer> boundary(Node node)
+	{
 	    ArrayList<Integer> ans = new ArrayList<>();
-	    ans.add(node.data);
-	    addLeftBoundary(node.left, ans);
-	    addLeaves(node.left, ans);
-	    addLeaves(node.right, ans);
+	    ans.add(node.data); //add root
+	    addLeftBoundary(node.left, ans); //add left Boundary
+	    addLeaves(node.left, ans); // add leaves of left subtree
+	    addLeaves(node.right, ans); // add leaves of right subtree
 	    addRightBoundary(node.right, ans);
 	    return ans;
+	    
 	}
-	public static void addLeftBoundary(Node node, List<Integer> ans){
-	    if(node ==  null)return;
+	public static void addLeftBoundary(Node node, ArrayList<Integer> ans){
+	    if(node == null)return;
 	    if(node.left == null && node.right == null)return;
 	    ans.add(node.data);
 	    if(node.left != null){
@@ -127,7 +129,7 @@ class Solution
 	        addLeftBoundary(node.right, ans);
 	    }
 	}
-	public static void addRightBoundary(Node node, List<Integer> ans){
+	public static void addRightBoundary(Node node, ArrayList<Integer> ans){
 	    if(node == null)return;
 	    if(node.left == null && node.right == null)return;
 	    if(node.right != null){
@@ -137,16 +139,11 @@ class Solution
 	    }
 	    ans.add(node.data);
 	}
-	public static void addLeaves(Node node, List<Integer> ans){
+	
+	public static void addLeaves(Node node, ArrayList<Integer> ans){
 	    if(node == null)return;
 	    addLeaves(node.left, ans);
-	    if(node.left == null && node.right == null){
-	        ans.add(node.data);
-	    }
+	    if(node.left == null && node.right == null)ans.add(node.data);
 	    addLeaves(node.right, ans);
 	}
 }
-
-
-
-
