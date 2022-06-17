@@ -120,7 +120,7 @@ class Solution
 	    
 	}
 	public static void addLeftBoundary(Node node, ArrayList<Integer> ans){
-	    if(node == null)return;
+	    if(node == null)return; // skewed to right Tree ( no left subtee)
 	    if(node.left == null && node.right == null)return;
 	    ans.add(node.data);
 	    if(node.left != null){
