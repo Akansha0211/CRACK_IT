@@ -18,9 +18,10 @@ class Solution {
     public TreeNode bstToGst(TreeNode root) {
         if(root == null)return null;
         bstToGst(root.right);
-        sum += root.val;
+        sum+= root.val;
         root.val = sum;
         bstToGst(root.left);
+        
         return root;
     }
 }
