@@ -127,51 +127,47 @@ class Solution
 {
     static class Pair{
         Node node;
-        int vertLevel;
-        public Pair(Node node, int vertLevel){
+        int vertLvl;
+        public Pair(Node node, int vertLvl){
             this.node = node;
-            this.vertLevel = vertLevel;
+            this.vertLvl = vertLvl;
         }
+        
+        
+        
     }
     static ArrayList<Integer> topView(Node root)
     {
-        // add your code
-        ArrayList<Integer> list = new ArrayList<>();
-        HashMap<Integer,Integer> map = new HashMap<>();
+        
+        ArrayList<Integer> ans = new ArrayList<>();
+        TreeMap<Integer,Integer> map= new TreeMap<>();
         
         Queue<Pair> q = new LinkedList<>();
         q.add(new Pair(root, 0));
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
-        while(q.size()>0){
-            int size = q.size();
-            while(size -- >0){
-                Pair p = q.remove();
-                min = Math.min(p.vertLevel, min);
-                max = Math.max(p.vertLevel, max);
-                
-                if(!map.containsKey(p.vertLevel)){
-                    map.put(p.vertLevel, p.node.data);
-                }
-                if(p.node.left != null){
-                    q.add(new Pair(p.node.left, p.vertLevel -1));
-                }
-                if(p.node.right != null){
-                    q.add(new Pair(p.node.right, p.vertLevel+1));
-                }
+        
+        while(!q.isEmpty()){
+            Pair p = q.poll();
+            Node node = p.node;
+            int vertLvl = p.vertLvl;
+            
+            if(!map.containsKey(vertLvl)){
+                map.put(vertLvl, node.data);
+            }
+            if(node.left != null){
+                q.add(new Pair(node.left, vertLvl-1));
+            }
+            if(node.right != null){
+                q.add(new Pair(node.right, vertLvl+1));
             }
         }
-        for(int i = min; i<=max; i++){
-            list.add(map.get(i));
+        
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+            ans.add(entry.getValue());
         }
-        return list;
+        return ans;
     }
+    
+    
+    
+    
 }
-
-
-
-
-
-
-
-
