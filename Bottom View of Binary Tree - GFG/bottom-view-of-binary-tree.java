@@ -119,41 +119,42 @@ class GfG {
 class Solution
 {
     static class Pair{
-        Node n;
-        int vertLevel;
-        Pair(Node n , int vertLevel){
-            this.n = n;
-            this.vertLevel = vertLevel;
+        Node node;
+        int vertLvl;
+        public Pair(Node node, int vertLvl){
+            this.node = node;
+            this.vertLvl = vertLvl;
         }
     }
-    //Function to return a list containing the bottom view of the given tree.
-    public ArrayList <Integer> bottomView(Node root){
+    public ArrayList <Integer> bottomView(Node root)
+    {
+        // Code here
         ArrayList<Integer> ans = new ArrayList<>();
-        HashMap<Integer, Integer> map = new HashMap<>();
-        Queue<Pair> queue = new LinkedList<>();
-        queue.add(new Pair(root, 0));
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
-        while(queue.size()>0){
-            int size = queue.size();
-            while(size-- > 0){
-                Pair p = queue.poll();
-                Node node = p.n;
-                int vertLvl = p.vertLevel;
-                min = Math.min(min, vertLvl);
-                max = Math.max(max, vertLvl);
-                
-                map.put(vertLvl, node.data);
-                if(node.left != null){
-                    queue.add(new Pair(node.left, vertLvl-1));
-                }
-                if(node.right != null){
-                    queue.add(new Pair(node.right, vertLvl+1));
-                }
+        TreeMap<Integer,Integer> map= new TreeMap<>();
+        
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(root, 0));
+        
+        while(!q.isEmpty()){
+            Pair p = q.poll();
+            Node node = p.node;
+            int vertLvl = p.vertLvl;
+            
+            // if(!map.containsKey(vertLvl)){
+            //     map.put(vertLvl, node.data);
+            // }
+            // only diff from Top view
+             map.put(vertLvl, node.data);
+            if(node.left != null){
+                q.add(new Pair(node.left, vertLvl-1));
+            }
+            if(node.right != null){
+                q.add(new Pair(node.right, vertLvl+1));
             }
         }
-        for(int i = min; i<=max; i++){
-            ans.add(map.get(i));
+        
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+            ans.add(entry.getValue());
         }
         return ans;
     }
