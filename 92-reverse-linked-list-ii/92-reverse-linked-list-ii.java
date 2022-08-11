@@ -17,6 +17,7 @@ class Solution {
             prev = prev.next;
         }
         ListNode curr = prev.next; // it will remain same only changing ptr is forw
+        //Reversing
         for(int i = 0; i<right-left; i++){
             ListNode forw = curr.next;
             curr.next = forw.next;
