@@ -1,22 +1,20 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
-        boolean vis[] = new boolean[nums.length];
-        backtrack(new ArrayList<Integer>(), nums, ans, vis);
+        permutationHelper(nums, new boolean[nums.length], new ArrayList<Integer>(), ans);
         return ans;
     }
-    
-    public void backtrack(List<Integer> list, int[] nums, List<List<Integer>> ans, boolean[] vis){
-        if(list.size() == nums.length){
-            ans.add(new ArrayList<>(list));
+    public void permutationHelper(int[] nums, boolean[] vis, List<Integer> ds, List<List<Integer>> ans){
+        if(ds.size() == nums.length){
+            ans.add(new ArrayList<Integer>(ds));
             return;
         }
-        for(int i = 0; i<nums.length ; i++){
+        for(int i = 0; i<nums.length; i++){
             if(vis[i] == true)continue;
-            list.add(nums[i]);
+            ds.add(nums[i]);
             vis[i] = true;
-            backtrack(list, nums, ans, vis);
-            list.remove(list.size() - 1);
+            permutationHelper(nums, vis, ds, ans);
+            ds.remove(ds.size()-1);
             vis[i] = false;
         }
     }
