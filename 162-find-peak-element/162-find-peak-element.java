@@ -2,9 +2,7 @@ class Solution {
     public int findPeakElement(int[] nums) {
         if(nums.length == 1) return 0; // single element
         
-        int n = nums.length;
-		
-		
+        int n = nums.length;		
         int start = 1;
         int end = n-2;
         
