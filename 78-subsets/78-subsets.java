@@ -14,7 +14,7 @@ class Solution {
         ds.add(nums[index]);
         subsetsHelper(index+1, nums, ds, ans);
         // not include index
-        ds.remove(ds.size()-1);
+        ds.remove(ds.size()-1); // Backtracking Step
         subsetsHelper(index+1, nums, ds, ans);
     }
 }
