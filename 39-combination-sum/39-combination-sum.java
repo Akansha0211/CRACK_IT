@@ -1,20 +1,23 @@
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans = new ArrayList<>();
-        comSumHelper(0, candidates,target,ans, new ArrayList<>());
+        combinationHelper(0, target, candidates, new ArrayList<Integer>(), ans);
         return ans;
     }
-    public static void comSumHelper(int ind, int[]candidates, int target, List<List<Integer>>ans, List<Integer> ds){
+    public void combinationHelper(int index, int target, int[]candidates, List<Integer> ds, List<List<Integer>> ans){
+        if(index>=candidates.length)return;
         if(target == 0){
             ans.add(new ArrayList<>(ds));
             return;
         }
-        if(ind>=candidates.length)return;
-        if(candidates[ind]<=target){
-            ds.add(candidates[ind]);
-            comSumHelper(ind, candidates, target - candidates[ind], ans, ds);
+        
+        //pick
+        if(target >= candidates[index]){
+            ds.add(candidates[index]);
+            combinationHelper(index, target - candidates[index],candidates, ds, ans);
             ds.remove(ds.size()-1);
         }
-        comSumHelper(ind+1, candidates, target, ans, ds);
+        // do not pick
+        combinationHelper(index+1, target, candidates, ds, ans);
     }
 }
