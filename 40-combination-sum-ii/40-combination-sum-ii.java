@@ -2,19 +2,25 @@ class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> ans = new ArrayList<>();
         Arrays.sort(candidates);
-        comSumHelper(0,candidates, target, ans, new ArrayList<>());
+        combinationHelper(0, target, candidates, new ArrayList<Integer>(), ans);
         return ans;
     }
-    public static void comSumHelper(int ind, int[] arr, int target, List<List<Integer>> ans , List<Integer> ds){
+    public void combinationHelper(int index, int target, int[] candidates, ArrayList<Integer> ds,
+                                List<List<Integer>> ans){
+        // BC
         if(target == 0){
             ans.add(new ArrayList<>(ds));
-            return;            
+            return;
         }
-        for(int i = ind; i<arr.length; i++){
-            if(i>ind && arr[i] == arr[i-1])continue;
-            if(arr[ind]>target)break;
-            ds.add(arr[i]);
-            comSumHelper(i+1, arr, target-arr[i], ans, ds);
+        
+        for(int i = index; i<candidates.length; i++){
+            
+            if(i!=index && candidates[i] == candidates[i-1])continue;
+            
+            if(candidates[i] > target)break;
+            
+            ds.add(candidates[i]);
+            combinationHelper(i+1, target-candidates[i],candidates, ds, ans);
             ds.remove(ds.size()-1);
         }
     }
