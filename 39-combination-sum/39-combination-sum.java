@@ -5,14 +5,15 @@ class Solution {
         return ans;
     }
     public void combinationHelper(int index, int target, int[]candidates, List<Integer> ds, List<List<Integer>> ans){
-        if(index>=candidates.length)return;
         if(target == 0){
             ans.add(new ArrayList<>(ds));
             return;
         }
+        if(index>=candidates.length)return;
+        
         
         //pick
-        if(target >= candidates[index]){
+        if(candidates[index]<=target){
             ds.add(candidates[index]);
             combinationHelper(index, target - candidates[index],candidates, ds, ans);
             ds.remove(ds.size()-1);
