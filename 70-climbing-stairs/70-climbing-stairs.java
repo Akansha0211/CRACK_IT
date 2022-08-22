@@ -1,16 +1,14 @@
 class Solution {
     public int climbStairs(int n) {
-        HashMap<Integer,Integer> map = new HashMap<>();
-        return climbHelper(0, n, map);
+        Map<Integer,Integer> map = new HashMap<>();
+        return climbStairsHelper(n, map);
     }
-    public int climbHelper(int curr, int n, HashMap<Integer,Integer> map){
-        if(curr == n)return 1;
-        if(curr > n)return 0;
-        
-        if(map.containsKey(curr))return map.get(curr);
-        int left = climbHelper(curr+1, n, map);
-        int right = climbHelper(curr+2, n, map);
-        map.put(curr, left+right);
-        return  left + right;
+    public int climbStairsHelper(int n, Map<Integer,Integer> map){
+        if(n == 0 || n==1)return 1;
+        if(map.containsKey(n))return map.get(n);
+        int choice1 = climbStairsHelper(n-1, map);
+        int choice2 = climbStairsHelper(n-2, map);
+        map.put(n, choice1 + choice2);
+        return choice1 + choice2;
     }
 }
