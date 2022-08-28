@@ -18,7 +18,6 @@ class Solution {
         if(root == null)return 0;
         int leftHeight = maxDepth(root.left);
         int rightHeight = maxDepth(root.right);
-        int apniHeight = 1 + Math.max(leftHeight, rightHeight);
-        return apniHeight;
+        return 1 + Math.max(leftHeight, rightHeight);
     }
 }
