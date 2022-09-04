@@ -1,32 +1,31 @@
 class Solution {
     public boolean canPartition(int[] nums) {
-        int sum = 0;
-        for(int i=0 ; i<nums.length ; i++){
-            sum+= nums[i];
+        int totalSum = 0;
+        for(int num : nums){
+            totalSum+=num;
         }
-        if(sum %2 != 0)return false;
+        if(totalSum %2 != 0)return false;
+        int target = totalSum/2;
+        int n = nums.length;
         HashMap<String,Boolean> map = new HashMap<>();
-        return subsetSumTargetHelper(0, sum/2, nums, map);
+        return subsetSumTargetHelper(0, target, nums, map);
     }
-    public boolean subsetSumTargetHelper(int ind, int target, int[] nums, HashMap<String,Boolean> map){
+    public static boolean subsetSumTargetHelper(int index , int target, int[] nums, HashMap<String,Boolean> map){
         
         if(target == 0)return true;
-        if(ind >= nums.length && target != 0)return false;
-        
-        String key = ind + "#" + target;
+        if(index>=nums.length && target != 0)return false;
+        String key = Integer.toString(index) + "#" + Integer.toString(target);
         if(map.containsKey(key))return map.get(key);
-        
         boolean take = false;
-        if(target >= nums[ind]){
-            take = subsetSumTargetHelper(ind+1, target - nums[ind] , nums, map);
-        } 
-        boolean notTake = false;
-        if(take == false){
-            notTake = subsetSumTargetHelper(ind+1, target, nums, map);
+        if(target >= nums[index]){
+            take = subsetSumTargetHelper(index+1, target - nums[index], nums, map);
         }
-                 
-        map.put(key, notTake | take);
-        return notTake | take;
+        boolean dontTake = false;
+        if(take == false){
+            dontTake = subsetSumTargetHelper(index+1, target, nums, map);
+        }
+        map.put(key, (take || dontTake));
+        return (take || dontTake);
     }
     
 }
