@@ -17,8 +17,6 @@ class Solution {
         
         if(target == 0)return true;
         if(index>=nums.length && target != 0)return false;
-        // String key = Integer.toString(index) + "#" + Integer.toString(target);
-        // if(map.containsKey(key))return map.get(key);
         if(dp[index][target] != -1)return dp[index][target]==1 ? true:false;
         boolean take = false;
         if(target >= nums[index]){
