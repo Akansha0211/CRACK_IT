@@ -7,24 +7,29 @@ class Solution {
         if(totalSum %2 != 0)return false;
         int target = totalSum/2;
         int n = nums.length;
-        HashMap<String,Boolean> map = new HashMap<>();
-        return subsetSumTargetHelper(0, target, nums, map);
+        int[][] dp = new int[n][target+1];
+        for(int[] row : dp){
+            Arrays.fill(row, -1);
+        }
+        return subsetSumTargetHelper(0, target, nums,dp);
     }
-    public static boolean subsetSumTargetHelper(int index , int target, int[] nums, HashMap<String,Boolean> map){
+    public static boolean subsetSumTargetHelper(int index , int target, int[] nums, int[][] dp){
         
         if(target == 0)return true;
         if(index>=nums.length && target != 0)return false;
-        String key = Integer.toString(index) + "#" + Integer.toString(target);
-        if(map.containsKey(key))return map.get(key);
+        // String key = Integer.toString(index) + "#" + Integer.toString(target);
+        // if(map.containsKey(key))return map.get(key);
+        if(dp[index][target] != -1)return dp[index][target]==1 ? true:false;
         boolean take = false;
         if(target >= nums[index]){
-            take = subsetSumTargetHelper(index+1, target - nums[index], nums, map);
+            take = subsetSumTargetHelper(index+1, target - nums[index], nums, dp);
         }
         boolean dontTake = false;
         if(take == false){
-            dontTake = subsetSumTargetHelper(index+1, target, nums, map);
+            dontTake = subsetSumTargetHelper(index+1, target, nums, dp);
         }
-        map.put(key, (take || dontTake));
+        // map.put(key, (take || dontTake));
+        dp[index][target] = (take || dontTake) ? 1:0;
         return (take || dontTake);
     }
     
