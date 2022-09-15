@@ -1,45 +1,34 @@
+
 class Solution {
-    public class Pair{
-        int x, y, count;
-        public Pair(int x, int y, int count){
-            this.x = x;
-            this.y = y;
-            this.count = count;
-        }
-    }
+    int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0},{1,-1},{-1,1},{-1,-1},{1,1}};
     public int shortestPathBinaryMatrix(int[][] grid) {
-        if(grid[0][0] != 0) return -1;
         
         int n = grid.length;
         int m = grid[0].length;
         
-        Queue<Pair> q = new LinkedList<>();
-        q.add(new Pair(0, 0, 1));
+        if(grid[0][0] == 1 || grid[n-1][m-1] == 1)return -1;
+        boolean[][] vis = new boolean[n][m];
+        vis[0][0] = true;
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{0,0});
         
-        int[] drow = {-1, 0, 1, 0, -1, 1, 1, -1};
-        int[] dcol = {0, -1, 0, 1, -1, 1, -1, 1};
-        
+        int level = 0;
         while(!q.isEmpty()){
-            int s = q.size();
-            while(s-- > 0){
-                Pair curr = q.poll();
-                int x = curr.x;
-                int y = curr.y;
-                int count = curr.count;
-                
-                if(x == n-1 && y == m-1)
-                    return count;
-                for(int i=0; i<8; i++){
-                    int nrow = x + drow[i];
-                    int ncol = y + dcol[i];
-                    if(nrow >= 0 && ncol >= 0 && nrow < n && ncol < m && grid[nrow][ncol] == 0){
-                        q.add(new Pair(nrow, ncol, count+1));
-                        grid[nrow][ncol] = 1;
+            int size = q.size();
+            for(int i = 0; i<size; i++){
+                int[] pop = q.poll();
+                if(pop[0] == n-1 && pop[1] == m-1)return (level +1);
+                for(int k = 0; k<dir.length; k++){
+                    int x = pop[0] + dir[k][0];
+                    int y = pop[1] + dir[k][1];
+                    if((x>=0 && x<n) &&(y>=0 && y<m) && !vis[x][y] && grid[x][y] == 0){
+                        q.add(new int[]{x,y});
+                        vis[x][y] = true;
                     }
                 }
             }
+            level++;
         }
-        
         return -1;
     }
 }
