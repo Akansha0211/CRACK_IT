@@ -1,8 +1,8 @@
 
 class Solution {
-    int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0},{1,-1},{-1,1},{-1,-1},{1,1}};
+     int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0},{1,-1},{-1,1},{-1,-1},{1,1}};
     public int shortestPathBinaryMatrix(int[][] grid) {
-        
+       
         int n = grid.length;
         int m = grid[0].length;
         
@@ -24,6 +24,7 @@ class Solution {
                     if((x>=0 && x<n) &&(y>=0 && y<m) && !vis[x][y] && grid[x][y] == 0){
                         q.add(new int[]{x,y});
                         vis[x][y] = true;
+                        
                     }
                 }
             }
