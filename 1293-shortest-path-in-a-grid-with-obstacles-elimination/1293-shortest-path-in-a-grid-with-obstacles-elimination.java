@@ -12,7 +12,7 @@ class Solution {
     public int shortestPath(int[][] grid, int k) {          
         int n = grid.length;
         int m = grid[0].length;
-        if(n==1 && m==1)return 0;
+        if(n==1 && m==1)return 0; // ALREADY REACHED DESTINATION
         int[][] maxPower = new int[n][m];
         for(int[] row : maxPower){
             Arrays.fill(row, -1);
