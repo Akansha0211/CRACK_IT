@@ -1,47 +1,41 @@
 class Solution {
-    class Pair{
-        int x;
-        int y;
-        public Pair(int x, int y){
-            this.x = x;
-            this.y = y;
-        }
-    }
     public int orangesRotting(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
         
-        Queue<Pair> queue = new LinkedList<>();
-        for(int i = 0; i<grid.length; i++){
-            for(int j = 0; j<grid[0].length; j++){
+        Queue<int[]> q = new LinkedList<>();
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m; j++){
                 if(grid[i][j] == 2){
-                    queue.add(new Pair(i,j));
+                    q.add(new int[]{i,j});
                 }
             }
         }
-        
-        int[][] dir = new int[][]{{0,1},{0,-1},{-1,0},{1,0}};
-        int time = 0;
-        while(!queue.isEmpty()){
-            int size = queue.size();
-            while(size-- >0){
-                Pair rem = queue.poll();
+        int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+        int levels = 0;
+        while(!q.isEmpty()){
+            int size = q.size();
+            for(int i = 0; i<size; i++){
+                int[] rem = q.poll();
                 for(int k = 0; k<dir.length; k++){
-                    int x = rem.x + dir[k][0];
-                    int y = rem.y + dir[k][1];
-                    if(x>=0 && y>=0 && x<grid.length && y< grid[0].length && grid[x][y] == 1){
-                        grid[x][y] = 2; // rotten
-                        queue.add(new Pair(x,y));
-                        
+                    int x = rem[0] + dir[k][0];
+                    int y = rem[1] + dir[k][1];
+                    if((x>=0 && x<n) && (y>=0 && y<m) && grid[x][y] == 1){
+                        q.add(new int[]{x,y}); // now fresh ornage has become a rotten one
+                        grid[x][y] = 2;
                     }
                 }
             }
-            if(!queue.isEmpty()) time++;
+            if(!q.isEmpty())levels++;
         }
-        
-        for(int i = 0; i<grid.length; i++){
-            for(int j = 0; j<grid[0].length; j++){
-                if(grid[i][j] == 1)return -1;
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m; j++){
+                if(grid[i][j] == 1){
+                    // any Fresh orange is still remaining
+                    return -1;
+                }
             }
         }
-        return time;
+        return levels;
     }
 }
