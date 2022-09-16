@@ -1,47 +1,38 @@
 class Solution {
-    class Pair{
-        int x; 
-        int y;
-        Pair(int x, int y){
-            this.x = x;
-            this.y = y;
-        }
-    }
     public void solve(char[][] board) {
-        int rows = board.length;
-        int cols = board[0].length;
-        
-        int[][] dir = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
-        
-        for(int i = 0; i<rows; i++){
-            for(int j = 0; j<cols; j++){
-                //mark all corner O as safe and apply bfs on them 
-                if((i == 0  || i== rows-1 || j == 0 || j == cols-1) && board[i][j] == 'O'){
-                    Queue<Pair> queue = new LinkedList<>();
-                    board[i][j] = 'S';
-                    queue.add(new Pair(i,j));
-                    while(!queue.isEmpty()){
-                        Pair rem = queue.poll();
-                        for(int k = 0; k<dir.length; k++){
-                            int x = rem.x + dir[k][0];
-                            int y = rem.y + dir[k][1];
-                            if((x>=0 && y>=0 && x<rows && y< cols) && board[x][y] == 'O'){
-                                board[x][y] = 'S';
-                                queue.add(new Pair(x,y));
-                            }
-                        }
+        int n = board.length;
+        int m = board[0].length;
+        Queue<int[]> q = new LinkedList<>();
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m; j++){
+                if((i == 0 || j==0 || j==m-1 || i==n-1)&& board[i][j] == 'O'){
+                    q.add(new int[]{i,j});
+                    board[i][j] = 'S'; // mark it as safe
+                }
+            }
+        }
+        int[][] dir = new int[][]{{0,1},{0,-1},{-1,0},{1,0}};
+        while(!q.isEmpty()){
+            int size = q.size();
+            for(int i = 0; i<size; i++){
+                int[] rem = q.poll();
+                for(int k = 0; k<dir.length; k++){
+                    int x = rem[0] + dir[k][0];
+                    int y = rem[1] + dir[k][1];
+                    if((x>=0 && x<n) && (y>=0 && y<m) && board[x][y]=='O'){
+                        q.add(new int[]{x,y});
+                        board[x][y] = 'S';
                     }
                 }
             }
         }
-        
-        for(int i = 0; i<rows; i++){
-            for(int j = 0; j<cols; j++){
-                if(board[i][j] == 'S'){
-                    board[i][j] = 'O';
-                }else if(board[i][j] == 'O'){
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<m; j++){
+                if(board[i][j] == 'O'){
                     board[i][j] = 'X';
-                 }
+                }else if(board[i][j] =='S'){
+                    board[i][j] = 'O';
+                }
             }
         }
     }
