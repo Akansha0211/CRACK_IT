@@ -15,32 +15,32 @@
  */
 class Solution {
     // int max_val = Integer.MIN_VALUE;
-    // public int goodNodes(TreeNode root) {
-    //     int max = Integer.MIN_VALUE;
-    //     return helper(root, max);
-    // }
-    // public int helper(TreeNode root, int max){
-    //     if(root == null)return 0;
-    //     int cnt = 0;
-    //     if(root.val >= max){
-    //         max = root.val;
-    //        cnt++;         
-    //     }
-    //     return cnt+= helper(root.left, max) + helper(root.right, max);
-    // }
     public int goodNodes(TreeNode root) {
-        return dfs(root, root.val);
+        int max = Integer.MIN_VALUE;
+        return helper(root, max);
     }
-    
-    private int dfs(TreeNode root, int max){
-        if(root == null) return 0;
-        
+    public int helper(TreeNode root, int max){
+        if(root == null)return 0;
         int cnt = 0;
-
         if(root.val >= max){
             max = root.val;
-            cnt++;
+           cnt++;         
         }
-        return cnt += dfs(root.left, max) + dfs(root.right, max);
+        return cnt+= helper(root.left, max) + helper(root.right, max);
     }
+//     public int goodNodes(TreeNode root) {
+//         return dfs(root, root.val);
+//     }
+    
+//     private int dfs(TreeNode root, int max){
+//         if(root == null) return 0;
+        
+//         int cnt = 0;
+
+//         if(root.val >= max){
+//             max = root.val;
+//             cnt++;
+//         }
+//         return cnt += dfs(root.left, max) + dfs(root.right, max);
+//     }
 }
