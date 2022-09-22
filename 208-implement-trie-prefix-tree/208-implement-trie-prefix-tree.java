@@ -1,51 +1,59 @@
-class Trie {
+class Node{
+    Node[] links = new Node[26];
+    boolean flag = false;
     
-    class Node{
-        char ch;
-        boolean eow;
-        Node[] arr = new Node[26];
-        
-        public Node(char ch){
-            this.ch = ch;
-            this.eow = eow;
-        }
+    boolean containsKey(char ch){
+        return links[ch-'a'] != null;
     }
+    void put(char ch, Node node){
+        links[ch-'a'] = node;
+    }
+    Node get(char ch){
+        return links[ch-'a'];
+    }
+    void setEnd(){
+        flag = true;
+    }
+    boolean isEnd(){
+        return flag;
+    }
+}
+class Trie {
     Node root;
-
+    
     public Trie() {
-        root = new Node(' ');
+        root = new Node();
     }
     
     public void insert(String word) {
-        Node temp = root;
+        Node node = root;
         for(int i = 0; i<word.length(); i++){
-            char ch = word.charAt(i);
-            if(temp.arr[ch-'a'] == null){
-                temp.arr[ch-'a'] = new Node(ch);
+            if(!node.containsKey(word.charAt(i))){
+                node.put(word.charAt(i), new Node());
             }
-            temp = temp.arr[ch-'a'];
+            node = node.get(word.charAt(i)); // move to refernce trie(node i.e next node)
         }
-        temp.eow = true;
+        node.setEnd();
     }
     
     public boolean search(String word) {
-        
-        Node temp = root;
+        Node node = root;
         for(int i = 0; i<word.length(); i++){
-            char ch = word.charAt(i);
-            if(temp.arr[ch-'a'] == null)return false;
-            temp = temp.arr[ch-'a'];
+            if(!node.containsKey(word.charAt(i))){
+                return false;
+            }
+            node = node.get(word.charAt(i));
         }
-        if(temp.eow == true)return true;
-        else return false;
+        return node.isEnd();
     }
     
     public boolean startsWith(String prefix) {
-        Node temp = root;
+        Node node = root;
         for(int i = 0; i<prefix.length(); i++){
-            char ch = prefix.charAt(i);
-            if(temp.arr[ch-'a'] == null)return false;
-            temp = temp.arr[ch-'a'];
+            if(!node.containsKey(prefix.charAt(i))){
+                return false;
+            }
+            node = node.get(prefix.charAt(i));
         }
         return true;
     }
