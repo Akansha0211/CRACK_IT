@@ -17,53 +17,59 @@ class Solution {
     class Pair{
         TreeNode node;
         int vertLvl;
-        int level; // horizontal
+        int horiLvl;
         
-        public Pair(TreeNode node, int vertLvl, int level){
-            this.node = node;
+        public Pair(TreeNode node, int vertLvl, int horiLvl){
+           this.node = node;
             this.vertLvl = vertLvl;
-            this.level = level;
+            this.horiLvl = horiLvl;
         }
     }
     public List<List<Integer>> verticalTraversal(TreeNode root) {
-        TreeMap<Integer, TreeMap<Integer,PriorityQueue<Integer>>> map = new TreeMap<>();
-        Queue<Pair> q = new LinkedList<>();
-        q.offer(new Pair(root, 0,0));
+        List<List<Integer>> ans = new ArrayList<>();
         
-        //Level order Traversal
+        if(root == null)return ans;
+        
+        Queue<Pair> q = new LinkedList<>();
+        q.offer(new Pair(root, 0, 0));
+        
+        TreeMap<Integer,TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
+        
         while(!q.isEmpty()){
-            Pair pair = q.poll();
-            TreeNode node = pair.node;
-            int vertLvl = pair.vertLvl;
-            int level = pair.level;
+            Pair rem = q.poll();
+            TreeNode node = rem.node;
+            int verticalLvl = rem.vertLvl;
+            int horizontalLvl = rem.horiLvl;
             
-            if(!map.containsKey(vertLvl)){
-                map.put(vertLvl, new TreeMap<>());
+            if(!map.containsKey(verticalLvl)){
+                map.put(verticalLvl, new TreeMap<>());
             }
-            if(!map.get(vertLvl).containsKey(level)){
-                map.get(vertLvl).put(level, new PriorityQueue<>());
+            // contains vertLvl , now check for horizontal Level
+           
+            if(!map.get(verticalLvl).containsKey(horizontalLvl)){
+                map.get(verticalLvl).put(horizontalLvl, new PriorityQueue<>());
             }
-            map.get(vertLvl).get(level).offer(node.val);
+            // map contains vertLvl and horizontalLvl , so just add the node val(Integer) to the PriorityQueue
+            map.get(verticalLvl).get(horizontalLvl).offer(node.val);
             
             if(node.left != null){
-                q.offer(new Pair(node.left, vertLvl -1, level+1));
+                q.offer(new Pair(node.left, verticalLvl-1, horizontalLvl+1));
             }
             if(node.right != null){
-                q.offer(new Pair(node.right, vertLvl+1, level +1));
+                q.offer(new Pair(node.right, verticalLvl+1, horizontalLvl+1));
             }
+            
         }
         
-        // create answer List [[], [], ....]
-        List<List<Integer>> list = new ArrayList<>();
+        // generate your ans list (2D LIST)
         for(TreeMap<Integer,PriorityQueue<Integer>> innerMaps : map.values()){
-            list.add(new ArrayList<>());
-            for(PriorityQueue<Integer> nodes : innerMaps.values()){
-                while(!nodes.isEmpty()){
-                    System.out.println(nodes.peek());
-                    list.get(list.size()-1).add(nodes.poll());
+            ans.add(new ArrayList<>());
+            for(PriorityQueue<Integer> pq : innerMaps.values()){
+                while(!pq.isEmpty()){
+                    ans.get(ans.size()-1).add(pq.poll());
                 }
             }
         }
-        return list;
+        return ans;
     }
 }
