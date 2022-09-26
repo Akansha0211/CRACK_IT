@@ -18,9 +18,10 @@ class Solution {
         if(root == null)return true;
         return isSymm(root.left, root.right);
     }
-    private boolean isSymm(TreeNode left, TreeNode right){
+    public boolean isSymm(TreeNode left, TreeNode right){
         if(left == null || right == null)return left == right;
+        // checking in PreOrder
         if(left.val != right.val)return false;
-        return isSymm(left.right , right.left) && isSymm(left.left, right.right);
+        return isSymm(left.right, right.left) && isSymm(left.left, right.right);
     }
 }
