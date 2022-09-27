@@ -14,16 +14,16 @@
  * }
  */
 class Solution {
-    int moves = 0;
+    int cost = 0;
     public int distributeCoins(TreeNode root) {
-        distriHelper(root);
-        return moves;
+        distributeHelper(root);
+        return cost;
     }
-    public int  distriHelper(TreeNode root){
+    public int distributeHelper(TreeNode root){
         if(root == null)return 0;
-        int left = distriHelper(root.left);
-        int right = distriHelper(root.right);
-        moves+= Math.abs(left) + Math.abs(right);
-        return left + right + root.val -1;
+        int left = distributeHelper(root.left);
+        int right = distributeHelper(root.right);
+        cost += Math.abs(left) + Math.abs(right);
+        return left+right+root.val -1;
     }
 }
