@@ -2,9 +2,20 @@ class Solution {
     public int rob(int[] nums) {
         int n = nums.length;
         int[] dp = new int[n];
-        Arrays.fill(dp,-1);
-        return robHelper(n-1, nums, dp);
+        dp[0] = nums[0];
+        for(int i = 1; i<nums.length; i++){
+            
+            int take = nums[i];
+            if(i>1)take += dp[i-2];
+            
+            int notTake = dp[i-1];
+            
+            dp[i] = Math.max(take, notTake);
+        }
+        return dp[n-1];
+        
     }
+    // Memoization
     public int robHelper(int index, int[]nums,int[]dp){
         if(index == 0)return nums[0];
         if(index<0)return 0;
