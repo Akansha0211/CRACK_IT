@@ -1,15 +1,16 @@
 class Solution {
     public int rob(int[] nums) {
-        HashMap<Integer,Integer> map = new HashMap<>();
-        return robHelper(0, nums, map);
-        
+        int n = nums.length;
+        int[] dp = new int[n];
+        Arrays.fill(dp,-1);
+        return robHelper(n-1, nums, dp);
     }
-    public int robHelper(int index, int[]nums, HashMap<Integer,Integer> map){
-        if(index>=nums.length)return 0;
-        if(map.containsKey(index))return map.get(index);
-        int rob = nums[index] +  robHelper(index+2, nums, map);
-        int dontRob = robHelper(index+1, nums, map);
-        map.put(index, Math.max(rob,dontRob));
-        return  Math.max(rob, dontRob);
+    public int robHelper(int index, int[]nums,int[]dp){
+        if(index == 0)return nums[0];
+        if(index<0)return 0;
+        if(dp[index]!=-1)return dp[index];
+        int pick = nums[index] + robHelper(index-2, nums, dp);
+        int notPick = robHelper(index-1, nums, dp);
+        return dp[index] = Math.max(pick, notPick);
     }
 }
