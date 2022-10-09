@@ -1,27 +1,25 @@
 class Solution {
     public int rob(int[] nums) {
         int n = nums.length;
-        int[] dp = new int[n];
-        dp[0] = nums[0];
+        
+        int prev = nums[0]; // 0 index for i-1 (when i = 1)
+        int prev2 = 0; // -1 index for i-2 
+        int curr_i = 0;
+        
         for(int i = 1; i<nums.length; i++){
             
             int take = nums[i];
-            if(i>1)take += dp[i-2];
+            if(i>1)take += prev2;
             
-            int notTake = dp[i-1];
+            int notTake = prev;
             
-            dp[i] = Math.max(take, notTake);
+            curr_i = Math.max(take, notTake);
+            
+            prev2 = prev;
+            prev = curr_i;
+            
         }
-        return dp[n-1];
+        return prev;
         
-    }
-    // Memoization
-    public int robHelper(int index, int[]nums,int[]dp){
-        if(index == 0)return nums[0];
-        if(index<0)return 0;
-        if(dp[index]!=-1)return dp[index];
-        int pick = nums[index] + robHelper(index-2, nums, dp);
-        int notPick = robHelper(index-1, nums, dp);
-        return dp[index] = Math.max(pick, notPick);
     }
 }
