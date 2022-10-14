@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 import java.util.*;
 import java.io.*;
 import java.lang.*;
@@ -42,6 +42,7 @@ class gfg
 
 
 
+
 // } Driver Code Ends
 
 
@@ -51,20 +52,27 @@ class Solution
     static int knapSack(int W, int wt[], int val[], int n) 
     { 
          // your code here 
-         Map<String,Integer> map = new HashMap<>();
-         return knapsackHelper(0, W, wt, val ,map);
+         int[][] dp = new int[n][W+1];
+         for(int[] row : dp){
+              Arrays.fill(row, -1);
+         }
+         return knapsackHelper(n-1, W, wt, val, dp);
     } 
-    public static int knapsackHelper(int index, int cap, int[] wt, int[] val, Map<String,Integer> map){
-        if(index>=wt.length || cap == 0)return 0;
-        String key = Integer.toString(index) + "#" + Integer.toString(cap);
-        if(map.containsKey(key))return map.get(key);
-        int consider = 0;
-        if(wt[index] <= cap){
-            consider = val[index] + knapsackHelper(index+1, cap- wt[index], wt, val, map);
+    static int knapsackHelper(int index, int capacity, int[] wt, int[] val, int[][] dp){
+        
+        if(index == 0){
+            if(wt[0] <= capacity){
+                return val[0];
+            }
+            return 0;
         }
-        int notConsider = knapsackHelper(index+1, cap, wt, val, map);
-        map.put(key, Math.max(consider, notConsider));
-        return Math.max(consider, notConsider);
+        if(dp[index][capacity] != -1)return dp[index][capacity];
+        int notTake = knapsackHelper(index-1, capacity, wt, val, dp);
+        int take = Integer.MIN_VALUE;
+        if(wt[index] <= capacity){
+            take = val[index]  + knapsackHelper(index-1, capacity - wt[index], wt, val, dp);
+        }
+        return dp[index][capacity] =  Math.max(take, notTake);
     }
 }
 
