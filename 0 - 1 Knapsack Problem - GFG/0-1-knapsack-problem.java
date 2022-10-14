@@ -53,27 +53,24 @@ class Solution
     { 
          // your code here 
          int[][] dp = new int[n][W+1];
-         for(int[] row : dp){
-              Arrays.fill(row, -1);
+         
+         for(int weight = wt[0]; weight<=W; weight++){
+             dp[0][weight] = val[0];
          }
-         return knapsackHelper(n-1, W, wt, val, dp);
+         for(int index = 1; index<=n-1; index++){
+             for(int weight = 0; weight<=W; weight++){
+                 int notTake = dp[index-1][weight];
+                 int take = Integer.MIN_VALUE;
+                 if(wt[index]<=weight){
+                     take = val[index] + dp[index-1][weight-wt[index]];
+                 }
+                 dp[index][weight] = Math.max(notTake, take);
+             }
+             
+         }
+         return dp[n-1][W];
     } 
-    static int knapsackHelper(int index, int capacity, int[] wt, int[] val, int[][] dp){
-        
-        if(index == 0){
-            if(wt[0] <= capacity){
-                return val[0];
-            }
-            return 0;
-        }
-        if(dp[index][capacity] != -1)return dp[index][capacity];
-        int notTake = knapsackHelper(index-1, capacity, wt, val, dp);
-        int take = Integer.MIN_VALUE;
-        if(wt[index] <= capacity){
-            take = val[index]  + knapsackHelper(index-1, capacity - wt[index], wt, val, dp);
-        }
-        return dp[index][capacity] =  Math.max(take, notTake);
-    }
+    
 }
 
 
