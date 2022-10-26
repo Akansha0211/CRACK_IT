@@ -30,6 +30,7 @@ class Solution {
             if(dp1[i] >1 && dp2[i] >1){
                 max = Math.max(max, dp1[i] + dp2[i] -1);
             }
+            //max = Math.max(max, dp1[i] + dp2[i] -1);
         }
         return max;
     }
