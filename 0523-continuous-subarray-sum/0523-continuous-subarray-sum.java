@@ -10,6 +10,9 @@ class Solution {
             if(map.containsKey(prefixSumModk) ){
                 if((i - map.get(prefixSumModk)) >=2)return true;
             }
+            // if(map.containsKey(prefixSumModk) && (i - map.get(prefixSumModk)) >=2){
+            //     return true;
+            // }
             else map.put(prefixSumModk, i);
         }
         return false;
