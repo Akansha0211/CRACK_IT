@@ -37,23 +37,17 @@ class Solution
     public static boolean find3Numbers(int A[], int n, int X) { 
     
        // Your code Here
-       Arrays.sort(A);
-      for(int i = 0; i<A.length-2; i++){
-           
-          int left = i+1;
-          int right = A.length-1; 
-          int target = X - A[i];
-           
-          while(left < right){
-              if((A[left] + A[right]) == target){
-                  return true;
-              }
-              else if(A[left] + A[right] < target)left++;
-              else right--;
-          }
-      }
-      return false;
         
-    
+        for(int i = 0; i<A.length-2; i++){
+            HashSet<Integer> map = new HashSet<>();
+            int currSum = X - A[i];
+            for(int j = i+1; j<A.length; j++){
+                if(map.contains(currSum - A[j])){
+                    return true;
+                }
+                map.add(A[j]);
+            }
+        }
+        return false;
     }
 }
