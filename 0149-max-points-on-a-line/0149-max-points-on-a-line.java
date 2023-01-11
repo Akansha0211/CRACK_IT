@@ -12,6 +12,7 @@ class Solution {
                 }
                 else{
                     slope =  (points[j][1] - points[i][1])/(double) (points[j][0] - points[i][0]);
+                    System.out.println(slope);
                 }
                 
                 map.put(slope, map.getOrDefault(slope,0)+1);
